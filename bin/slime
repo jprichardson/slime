@@ -4,7 +4,15 @@ var fs = require('fs')
 var path = require('path')
 var repl = require('repl')
 var util = require('util')
+var vm = require('vm')
 var chalk = require('chalk')
+var Compiler = require('traceur').NodeCompiler
+
+var traceurOptions = {
+  modules: 'commonjs'
+}
+
+var compiler = new Compiler(traceurOptions)
 
 // default to 'dev'
 var NODE_ENV = process.env.NODE_ENV || 'dev'
@@ -24,14 +32,24 @@ if (fs.existsSync(SLIME_FILE))
 var PROJ_NAME = PKG ? PKG.name : '[no project]'
 var r = repl.start({
   prompt: util.format('%s (%s)> ', PROJ_NAME, NODE_ENV),
-  ignoreUndefined: true
+  ignoreUndefined: true,
+  eval: function(code, context, file, callback) {
+    // remove '(' and ')'
+    code = code.slice(1, -1)
+    var newCode = compiler.compile(code, file, file)
+    
+    // get the 'use strict' noise out
+    newCode = newCode.split('\n')
+    newCode.shift()
+    newCode = newCode.join('\n')
+
+    res = vm.runInContext(newCode, context, file)
+    callback(null, res)
+  }
 }).on('exit', function() {
   console.log('exiting...')
   process.exit()
 })
-
-// default contexts
-r.context._ = require('lodash')
 
 // init requires
 if (!PKG || !PKG.dependencies) return

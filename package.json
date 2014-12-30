@@ -21,7 +21,8 @@
   "homepage": "https://github.com/jprichardson/slime",
   "dependencies": {
     "chalk": "^0.5.1",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "traceur": "0.0.79"
   },
   "preferGlobal": true,
   "bin": {
