@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+var path = require('path')
+var repl = require('repl')
+var util = require('util')
+var chalk = require('chalk')
+
+// default to 'dev'
+var NODE_ENV = process.env.NODE_ENV || 'dev'
+var PKG = require(path.join(process.cwd(), 'package.json'))
+
+var r = repl.start({
+  prompt: util.format('%s (%s)> ', PKG.name, NODE_ENV),
+  ignoreUndefined: true
+}).on('exit', function() {
+  console.log('exiting...')
+  process.exit()
+})
+
+r.context._ = require('lodash')

@@ -1,0 +1,30 @@
+{
+  "name": "slime",
+  "version": "0.0.1",
+  "description": "Easy Node.js REPL",
+  "main": "slime",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jprichardson/slime"
+  },
+  "keywords": [
+    "REPL"
+  ],
+  "author": "JP Richardson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jprichardson/slime/issues"
+  },
+  "homepage": "https://github.com/jprichardson/slime",
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "lodash": "^2.4.1"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "slime": "./bin/slime"
+  }
+}
