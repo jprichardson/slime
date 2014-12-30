@@ -9,14 +9,20 @@ var chalk = require('chalk')
 // default to 'dev'
 var NODE_ENV = process.env.NODE_ENV || 'dev'
 
-// package.json / slimefile.js
-var PKG = require(path.join(process.cwd(), 'package.json'))
+// package.json
+var PKG_FILE = path.join(process.cwd(), 'package.json')
+if (fs.existsSync(PKG_FILE))
+  var PKG = require(PKG_FILE)
+
+// slimefile.js
 var SLIME_FILE = path.join(process.cwd(), 'slimefile.js')
-if (fs.existsSync(SLIME_FILE)) var SLIME = require(SLIME_FILE)
+if (fs.existsSync(SLIME_FILE)) 
+  var SLIME = require(SLIME_FILE)
 
 // init REPL
+var PROJ_NAME = PKG ? PKG.name : '[no project]'
 var r = repl.start({
-  prompt: util.format('%s (%s)> ', PKG.name, NODE_ENV),
+  prompt: util.format('%s (%s)> ', PROJ_NAME, NODE_ENV),
   ignoreUndefined: true
 }).on('exit', function() {
   console.log('exiting...')
@@ -27,6 +33,7 @@ var r = repl.start({
 r.context._ = require('lodash')
 
 // init requires
+if (!PKG) return
 Object.keys(PKG.dependencies).forEach(function(dep) {
   // check if in slimefile.js
   if (SLIME && dep in SLIME.context) {
