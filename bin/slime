@@ -29,7 +29,7 @@ r.context._ = require('lodash')
 // init requires
 Object.keys(PKG.dependencies).forEach(function(dep) {
   // check if in slimefile.js
-  if (dep in SLIME.context) {
+  if (SLIME && dep in SLIME.context) {
     // ignore if it's 'false'
     if (SLIME.context[dep] === false)
       return
