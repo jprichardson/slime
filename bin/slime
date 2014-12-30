@@ -42,7 +42,12 @@ var r = repl.start({
     newCode.shift()
     newCode = newCode.join('\n')
 
-    res = vm.runInContext(newCode, context, file)
+    try {
+      var res = vm.runInContext(newCode, context, file)
+    } catch (err) {
+      console.error(err)
+    }
+    
     callback(null, res)
   }
 }).on('exit', function() {
