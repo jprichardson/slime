@@ -33,7 +33,7 @@ var r = repl.start({
 r.context._ = require('lodash')
 
 // init requires
-if (!PKG) return
+if (!PKG || !PKG.dependencies) return
 Object.keys(PKG.dependencies).forEach(function(dep) {
   // check if in slimefile.js
   if (SLIME && dep in SLIME.context) {
