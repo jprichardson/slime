@@ -1,3 +1,7 @@
+0.1.1 / 2014-12-30
+------------------
+- catch errors (prevents crashing)
+
 0.1.0 / 2014-12-30
 ------------------
 - added ES6 support via traceur
