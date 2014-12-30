@@ -5,7 +5,6 @@ var path = require('path')
 var repl = require('repl')
 var util = require('util')
 var vm = require('vm')
-var chalk = require('chalk')
 var Compiler = require('traceur').NodeCompiler
 
 var traceurOptions = {
