@@ -10,6 +10,7 @@ var chalk = require('chalk')
 var NODE_ENV = process.env.NODE_ENV || 'dev'
 var PKG = require(path.join(process.cwd(), 'package.json'))
 
+// init REPL
 var r = repl.start({
   prompt: util.format('%s (%s)> ', PKG.name, NODE_ENV),
   ignoreUndefined: true
@@ -18,4 +19,10 @@ var r = repl.start({
   process.exit()
 })
 
+// default contexts
 r.context._ = require('lodash')
+
+// init requires
+Object.keys(PKG.dependencies).forEach(function(dep) {
+  r.context[dep] = require(dep)
+})
